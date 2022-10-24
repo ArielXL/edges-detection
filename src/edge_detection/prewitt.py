@@ -84,7 +84,7 @@ def save_image(image, path):
 
 def main():
 
-    path = '../../img/cameraman.tif'
+    path = '../../img/lena.tif'
     image = load_image(path)
 
     prewitt(image, path=path, save=True, show=True)
