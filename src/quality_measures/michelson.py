@@ -8,14 +8,14 @@ def michelson_contrast(img):
 
     pixels = get_pixels(img)
     rows, columns = len(pixels), len(pixels[0])
-    f_minimum, f_maximum = 300, -300
+    f_minimumm, f_maximumm = 300, -300
 
     for i in range(rows):
         for j in range(columns):
-            f_minimum = min(f_minimum, pixels[i][j])
-            f_maximum = max(f_maximum, pixels[i][j])
+            f_minimumm = min(f_minimumm, pixels[i][j])
+            f_maximumm = max(f_maximumm, pixels[i][j])
 
-    michelson = (f_maximum - f_minimum) / (f_maximum + f_minimum)
+    michelson = (f_maximumm - f_minimumm) / (f_maximumm + f_minimumm)
     return michelson
 
 
