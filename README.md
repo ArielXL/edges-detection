@@ -144,7 +144,7 @@ $$
     $$
     donde $\mu_{x}$ es la media de $x$, $\mu_{y}$ es la media de $y$, $\sigma_{x}^{2}$ es la varianza de $x$, $\sigma_{y}^{2}$ es la varianza de $y$, $\sigma_{xy}^{2}$ es la covarianza de $x$ y $y$, $c_{1} = (k_{1}L)^{2}$ y $c_{2} = (k_{2}L)^{2}$ son dos variables para estabilizar la división en el denominador, $L$ es el rango dinámico de la imagen (diferencia entre la mayor y menor intensidad de gris), $k_{1} = 0.01$ y $k_{2} = 0.03$ son tomados valores por defecto.
 
-Contraste de Michelson
+### Contraste de Michelson
 
 1. Mide la utilización del rango de luminosidad.
 
@@ -155,25 +155,3 @@ Contraste de Michelson
    C_{Michelson} = \dfrac{f_{max} - f_{min}}{f_{max} + f_{min}}
    $$
    donde $f_{max}$ y $f_{min}$ son la mayor y la menor intensidad de los píxeles respectivamente.
-
-## Resultados
-
-**Imagen original / Imagen bordes** | **Algoritmo para la detección de bordes** | **MSE** | **PSNR (dB)** | **SSIM**| Michelson 
-:-:|:-:|:-:|:-:|---|---
-![cameraman_sobel](./img/cameraman/sobel.png) | *sobel* | $2474.398$ | $14.196$ | $0.431$| 
-![cameraman_sobel](./img/cameraman/farid.png) | farid |  |  | | 
-![cameraman_sobel](./img/cameraman/prewitt.png) | prewitt |  |  | | 
-![cameraman_sobel](./img/cameraman/scharr.png) | scharr |  |  | | 
-![cameraman_sobel](./img/cameraman/roberts.png) | roberts |  |  | | 
-![cameraman_canny](./img/cameraman/canny.png) | *canny* | $0.098$ | $58.236$ | $1.000$| 
-![cameraman_laplace](./img/cameraman/laplace.png) | *laplace* | $347.745$ | $22.718$ | $0.872$| 
-
-**Imagen original / Imagen bordes** | **Algoritmo para la detección de bordes** | **MSE** | **PSNR (dB)** | **SSIM**| Michelson 
-:-:|:-:|:-:|:-:|:-:|---
-![lena_sobel](./img/lena/sobel.png) | *sobel* | $2868.850$ | $13.554$ | $0.307$| 
-![lena_sobel](./img/lena/farid.png) | farid |  |  | | 
-![lena_sobel](./img/lena/prewitt.png) | prewitt |  |  | | 
-![lena_sobel](./img/lena/scharr.png) | scharr |  |  | | 
-![lena_sobel](./img/lena/roberts.png) | roberts |  |  | | 
-![lena_canny](./img/lena/canny.png) | *canny* | $0.102$ | $58.058$ | $1.000$| 
-![lena_laplace](./img/lena/laplace.png) | *laplace* | 464.503 | 21.461 | 0.693| 
