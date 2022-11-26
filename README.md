@@ -29,7 +29,7 @@ cd src/
 python main.py
 ```
 
-En la carpeta [img](./img/) podemos encontrar varias imágenes de muestra. Nuestra tarea fue probada con la imagen digital [cameraman](./img/cameraman.tif), muy conocida y reconocida en la literatura consultada. También dejamos al usuario la elección de tres algoritmos para el resaltado de los bordes, el cual debe especificar al ejecutar esta tarea.
+En la carpeta [img](./img/) podemos encontrar varias imágenes de muestra. Nuestra tarea fue probada con varias imágenes digitales en escala de grises, muy conocidas y reconocidas en la literatura consultada. También dejamos al usuario la elección de varios algoritmos para el resaltado de los bordes, el cual debe especificar al ejecutar esta tarea.
 
 ## Detección de bordes en imágenes digitales
 
@@ -63,6 +63,37 @@ En la carpeta [img](./img/) podemos encontrar varias imágenes de muestra. Nuest
 
 * Podemos encontrar nuestra propuesta de implementación [aquí](./src/edge_detection/laplace.py).
 
+### Algoritmo mediante el operador Scharr
+
+* Es es un método de filtrado utilizado para identificar y resaltar bordes (características) de degradado utilizando la primera derivada.
+* Normalmente se utiliza para identificar gradientes a lo largo del eje x (dx = 1, dy = 0) y el eje y (dx = 0, dy = 1) de forma independiente.
+* El rendimiento es bastante similar al del filtro Sobel y se utiliza principalmente para detectar bordes (cambios) en la intensidad de los píxeles.
+* Podemos encontrar nuestra propuesta de implementación [aquí](./src/edge_detection/scharr.py).
+
+### Algoritmo mediante el operador Prewitt
+
+* Fue desarrollado por Judith Prewitt.
+* Se utiliza en el procesamiento de imágenes, particularmente dentro de los algoritmos de detección de bordes.
+* Técnicamente, es un operador de diferenciación discreta que calcula una aproximación del gradiente de la función de intensidad de la imagen. En cada punto de la imagen, el resultado del operador es el vector de gradiente correspondiente o la norma de este vector.
+* Se basa en convolucionar la imagen con un filtro pequeño, separable y de valor entero en direcciones horizontales y verticales y, por lo tanto, es relativamente económico en términos de cálculos.
+* La aproximación de gradiente que produce es relativamente tosca, en particular para variaciones de alta frecuencia en la imagen.
+* Podemos encontrar nuestra propuesta de implementación [aquí](./src/edge_detection/prewitt.py).
+
+### Algoritmo mediante el operador Farid
+
+* Es el más invariantes rotacionalmente, porque requiere de un kernel más grande, que es computacionalmente más intensivo que los kernels utilizados anteriormente.
+* Propone usar un par de núcleos, uno para interpolación y otro para diferenciación.
+* Estos núcleos, de tamaños fijos, están optimizados para que la Transformada de Fourier se aproxime a su relación derivada correcta.
+* Podemos encontrar nuestra propuesta de implementación [aquí](./src/edge_detection/farid.py).
+
+### Algoritmo mediante el operador Roberts
+
+* Realiza una medición de gradiente espacial simple y rápida de calcular en una imagen.
+* Resalta regiones de alta frecuencia espacial que a menudo corresponden a bordes. En su uso más común, la entrada al operador es una imagen en escala de grises, al igual que la salida.
+* Los valores de píxeles en cada punto de la salida representan la magnitud absoluta estimada del gradiente espacial de la imagen de entrada en ese punto.
+* En teoría, el operador consta de un par de núcleos de convolución. Esto es muy similar al operador de Sobel.
+* Podemos encontrar nuestra propuesta de implementación [aquí](./src/edge_detection/roberts.py).
+
 ## Medidas para medir la calidad de las imágenes
 
 ### Error cuadrático medio (mean squared error)
@@ -85,7 +116,7 @@ $$
 
 1. Lo llamaremos *PSNR* (peak signal-to-noise ratio) por sus siglas en inglés.
 
-2.  Evalúa la relación entre la imagen y el ruido luego de aplicar algoritmos de mejora de la calidad de la imagen.
+2. Evalúa la relación entre la imagen y el ruido luego de aplicar algoritmos de mejora de la calidad de la imagen.
 
 3. Se expresa generalmente en escala logarítmica, utilizando como unidad el decibelio.
 
@@ -96,7 +127,6 @@ $$
    PSNR = 20 \log_{10}({MAX_{I}}) - 10 \log_{10}({MSE})
    $$
    donde $MAX_{I}$ es el máximo valor posible de píxeles en la imagen.
-   
 
 ### Índice de similitud estructural (structural similarity)
 
@@ -114,19 +144,36 @@ $$
     $$
     donde $\mu_{x}$ es la media de $x$, $\mu_{y}$ es la media de $y$, $\sigma_{x}^{2}$ es la varianza de $x$, $\sigma_{y}^{2}$ es la varianza de $y$, $\sigma_{xy}^{2}$ es la covarianza de $x$ y $y$, $c_{1} = (k_{1}L)^{2}$ y $c_{2} = (k_{2}L)^{2}$ son dos variables para estabilizar la división en el denominador, $L$ es el rango dinámico de la imagen (diferencia entre la mayor y menor intensidad de gris), $k_{1} = 0.01$ y $k_{2} = 0.03$ son tomados valores por defecto.
 
+Contraste de Michelson
+
+1. Mide la utilización del rango de luminosidad.
+
+2. El contraste de Michelson varı́a de 0 a 1.
+
+3. Se calcula mediante la formula:
+   $$
+   C_{Michelson} = \dfrac{f_{max} - f_{min}}{f_{max} + f_{min}}
+   $$
+   donde $f_{max}$ y $f_{min}$ son la mayor y la menor intensidad de los píxeles respectivamente.
+
 ## Resultados
 
-**Imagen original / Imagen bordes** | **Algoritmo para la detección de bordes** | **MSE** | **PSNR (dB)** | **SSIM**
-:-:|:-:|:-:|:-:|:-:
-![cameraman_sobel](./img/cameraman_sobel.png) | *sobel* | $2474.398$ | $14.196$ | $0.431$ 
-![cameraman_canny](./img/cameraman_canny.png) | *canny* | $0.098$ | $58.236$ | $1.000$ 
-![cameraman_laplace](./img/cameraman_laplace.png) | *laplace* | $347.745$ | $22.718$ | $0.872$ 
+**Imagen original / Imagen bordes** | **Algoritmo para la detección de bordes** | **MSE** | **PSNR (dB)** | **SSIM**| Michelson 
+:-:|:-:|:-:|:-:|---|---
+![cameraman_sobel](./img/cameraman/sobel.png) | *sobel* | $2474.398$ | $14.196$ | $0.431$| 
+![cameraman_sobel](./img/cameraman/farid.png) | farid |  |  | | 
+![cameraman_sobel](./img/cameraman/prewitt.png) | prewitt |  |  | | 
+![cameraman_sobel](./img/cameraman/scharr.png) | scharr |  |  | | 
+![cameraman_sobel](./img/cameraman/roberts.png) | roberts |  |  | | 
+![cameraman_canny](./img/cameraman/canny.png) | *canny* | $0.098$ | $58.236$ | $1.000$| 
+![cameraman_laplace](./img/cameraman/laplace.png) | *laplace* | $347.745$ | $22.718$ | $0.872$| 
 
-
-
-**Imagen original / Imagen bordes** | **Algoritmo para la detección de bordes** | **MSE** | **PSNR (dB)** | **SSIM**
---|:-:|:-:|:-:|:-:
-![lena_sobel](./img/lena_sobel.png) | *sobel* | $2868.850$ | $13.554$ | $0.307$ 
-![lena_canny](./img/lena_canny.png) | *canny* | $0.102$ | $58.058$ | $1.000$ 
-![lena_laplace](./img/lena_laplace.png) | *laplace* | 464.503 | 21.461 | 0.693
-
+**Imagen original / Imagen bordes** | **Algoritmo para la detección de bordes** | **MSE** | **PSNR (dB)** | **SSIM**| Michelson 
+:-:|:-:|:-:|:-:|:-:|---
+![lena_sobel](./img/lena/sobel.png) | *sobel* | $2868.850$ | $13.554$ | $0.307$| 
+![lena_sobel](./img/lena/farid.png) | farid |  |  | | 
+![lena_sobel](./img/lena/prewitt.png) | prewitt |  |  | | 
+![lena_sobel](./img/lena/scharr.png) | scharr |  |  | | 
+![lena_sobel](./img/lena/roberts.png) | roberts |  |  | | 
+![lena_canny](./img/lena/canny.png) | *canny* | $0.102$ | $58.058$ | $1.000$| 
+![lena_laplace](./img/lena/laplace.png) | *laplace* | 464.503 | 21.461 | 0.693| 

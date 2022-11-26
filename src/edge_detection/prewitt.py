@@ -5,35 +5,35 @@ import skimage.filters.edges
 import matplotlib.pyplot as plt
 
 
-def sobel(image, path='', save=False, show=False):
+def prewitt(image, path='', save=False, show=False):
     '''
-    Deteccion de bordes mediante el operador de Sobel.
+    Deteccion de bordes mediante el operador de Prewitt.
     '''
     # convertir a imagen en escala de grises
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # detectar los bordes mediante el metodo Canny
+    imgage_gaussian = cv2.GaussianBlur(image, (3, 3), 0)
 
-    # gradiente de direccion x
-    sobel_x = cv2.Sobel(image, cv2.CV_64F, 1, 0)
-    # gradiente de direccion y
-    sobel_y = cv2.Sobel(image, cv2.CV_64F, 0, 1)
+    kernel_x = np.array([[1, 1, 1], [0, 0, 0], [-1, -1, -1]])
+    kernel_y = np.array([[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]])
 
-    # gradiente de direccion x valor absoluto
-    sobel_x = np.uint8(np.absolute(sobel_x))
-    # gradiente de direccion y valor absoluto
-    sobel_y = np.uint8(np.absolute(sobel_y))
+    prewitt_x = cv2.filter2D(imgage_gaussian, -1, kernel_x)
+    prewitt_y = cv2.filter2D(imgage_gaussian, -1, kernel_y)
 
-    # sobel1 = cv2.bitwise_or(sobel_x, sobel_y)
-    sobel = skimage.filters.edges.sobel(image)
+    prewitt = prewitt_x + prewitt_y
+    # prewitt1 = skimage.filters.edges.prewitt(image)
 
     if show:
-        show_image(sobel)
-        # show_image(sobel1)
-        show_images([image, sobel])
+        # show_image(prewitt1)
+        show_image(prewitt)
+        # show_images([image, prewitt1])
+        show_images([image, prewitt])
     if save:
         name = get_name_image(path)
-        save_image(sobel, f'../../img/{name}_sobel.png')
+        # save_image(prewitt1, f'../../img/{name}_prewitt1.png')
+        save_image(prewitt, f'../../img/{name}_prewitt.png')
 
-    return sobel
+    return prewitt
 
 
 def get_name_image(path):
@@ -87,7 +87,7 @@ def main():
     path = '../../img/lena.tif'
     image = load_image(path)
 
-    sobel(image, path=path, save=True, show=True)
+    prewitt(image, path=path, save=True, show=True)
 
 
 if __name__ == '__main__':
