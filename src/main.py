@@ -65,12 +65,14 @@ class EdgeDetection:
         mse_value = mse(self.image, arr)
         psnr_value = psnr(self.image, arr)
         ssim_value = ssim(self.image, arr)
-        michelson_value = michelson(self.image, arr)
+        # michelson_value = michelson(self.image, arr)
+        name = Images.GetNameImage(self.path)
 
         print('El error cuadrático medio (MSE) es %0.3f.' % mse_value)
         print('El valor PSNR es %0.3f dB.' % psnr_value)
-        # print('El índice de similitud estructural (SSIM) es %0.3f.' % ssim_value)
-        print('El contraste de Michelson es %0.3f.' % michelson_value)
+        print('El índice de similitud estructural (SSIM) es %0.3f.' % ssim_value)
+        # print('El contraste de Michelson es %0.3f.' % michelson_value)
+        print()
 
 
 def run(paths, operators):
