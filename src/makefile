@@ -6,7 +6,7 @@ DEVELOPER 	:= Ariel Plasencia Díaz
 COPYRIGHT  	:= Copyright © 2021: $(DEVELOPERS)
 
 run: ## Ejecuta la tarea :)
-	python main.py
+	python3 main.py
 
 info: ## Muestra la descripcion de la tarea
 	@echo "$(NAME) v$(VERSION)"
